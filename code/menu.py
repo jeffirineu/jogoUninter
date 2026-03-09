@@ -5,7 +5,7 @@ from msilib.schema import Font
 import pygame.image
 from pygame import Surface, Rect
 
-from code.Const import WIN_WIDTH, C_WHITE, C_HALF_RED, C_HALF_BLACK, COMMAND_KEYS, C_GOLD
+from code.Const import WIN_WIDTH, C_WHITE, C_HALF_RED, C_HALF_BLACK, M_COMMAND_KEYS, C_GOLD, M_MENU_SELECT, C_GREEN
 
 
 class Menu:
@@ -15,6 +15,7 @@ class Menu:
         self.rect = self.surf.get_rect(left=0, top=0)
 
     def run(self, ):
+        menu_select = 0
         pygame.mixer_music.load("./asset/MenuMSC.mp3")
         pygame.mixer_music.play(-1)
         while True:
@@ -28,27 +29,47 @@ class Menu:
                 offset_x=-4,  # Sombra no eixo X
                 offset_y=5  # Sombra no eixo Y
             )
-            # Iniciar demo
-            self.menu_text(
-                text_size=35,
-                text="INICIAR DEMO",
-                text_color=C_HALF_RED,
-                text_center_pos=(WIN_WIDTH / 2, 175),
-                shadow_color=C_HALF_BLACK,
-                offset_x=-1,  # Sombra no eixo X
-                offset_y=1)  # Sombra no eixo Y
+            for i in range(len(M_MENU_SELECT)):
+                if i == menu_select :
+                    self.menu_text(35,
+                                   M_MENU_SELECT[i],
+                                   C_GREEN, (WIN_WIDTH / 2, 175 + 40 * i),
+                                   C_HALF_BLACK,
+                                   offset_x=-1,
+                                   offset_y=1)
+                else:
+                    self.menu_text(35,
+                                   M_MENU_SELECT[i],
+                                   C_HALF_RED, (WIN_WIDTH / 2, 175 + 40 * i),
+                                   C_HALF_BLACK,
+                                   offset_x=-1,
+                                   offset_y=1)
 
-            for i in range(len(COMMAND_KEYS)):
-                self.menu_text(25, COMMAND_KEYS[i], C_GOLD,((WIN_WIDTH / 4)+150*i, 270) , C_HALF_BLACK, )
-            pygame.display.flip()
-            # check for all events by click
+            for i in range(len(M_COMMAND_KEYS)):
+                self.menu_text(25, M_COMMAND_KEYS[i], C_GOLD, ((WIN_WIDTH / 4) + 150 * i, 270), C_GOLD, offset_x=-1,
+                               offset_y=1)
+
+            # all check events
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     quit()
+                # keyboard event
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_DOWN:
+                        if menu_select < len(M_MENU_SELECT) - 1:
+                            menu_select += 1
+                        else:
+                            menu_select = 0
+                    if event.key == pygame.K_UP:
+                        if menu_select >= len(M_MENU_SELECT) - 1:
+                            menu_select -= 1
+                        else:
+                            menu_select = len(M_MENU_SELECT) -1
+            pygame.display.flip()
 
     def menu_text(self, text_size: int, text: str, text_color: tuple, text_center_pos: tuple, shadow_color: tuple,
-                  offset_x=-5, offset_y=5, ):
+                  offset_x=0, offset_y=0, ):
         # 1. Cria a fonte
         text_font = pygame.font.SysFont("Lucida Sans Typewriter", text_size)
 
