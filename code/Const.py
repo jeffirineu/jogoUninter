@@ -1,2 +1,10 @@
+#C
+C_WHITE = (255, 255, 255)
+C_HALF_BLACK = (20, 20, 20)
+C_HALF_RED = (255, 0, 0)
+
+#M
+COMAND_KEYS = ('SPAÇO -> ATIRA', 'SETAS -> MOVEM NO EIXO X & Y,', 'Enter -> Lançar Mísseis')
+#
 WIN_WIDTH = 576
 WIN_HEIGHT = 324
