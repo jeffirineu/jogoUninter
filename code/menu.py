@@ -6,10 +6,18 @@ from pygame import Surface, Rect
 class Menu:
     def __init__(self, window):
         self.window = window
-        self.surf = pygame.image.load("./asset/Menu.png")
+        self.surf = pygame.image.load("./asset/MenuIMG.png")
         self.rect = self.surf.get_rect(left=0, top=0)
 
     def run(self, ):
-        self.window.blit(source=self.surf, dest=self.rect)
-        pygame.display.flip()
-        pass
+        pygame.mixer_music.load("./asset/MenuMSC.mp3")
+        pygame.mixer_music.play(-1)
+        while True:
+            self.window.blit(source=self.surf, dest=self.rect)
+            pygame.display.flip()
+            #check for all events by click
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+
