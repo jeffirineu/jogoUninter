@@ -11,3 +11,12 @@ M_COMMAND_KEYS = ('ESPAÇO: ATIRAR', 'SETAS: MOVER', 'ENTER: MÍSSEIS')
 #w
 WIN_WIDTH = 576
 WIN_HEIGHT = 324
+
+# E
+ENTITY_SPEED = {
+    'DemoBg0': 0,
+    'DemoBg1': 0.7,
+    'DemoBg2': 1,
+    'DemoBg3': 1.8,
+    'DemoBg4': 2
+}

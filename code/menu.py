@@ -5,7 +5,7 @@ from msilib.schema import Font
 import pygame.image
 from pygame import Surface, Rect
 
-from code.Const import WIN_WIDTH, C_WHITE, C_HALF_RED, C_HALF_BLACK, M_COMMAND_KEYS, C_GOLD, M_MENU_SELECT, C_GREEN
+from code.const import WIN_WIDTH, C_WHITE, C_HALF_RED, C_HALF_BLACK, M_COMMAND_KEYS, C_GOLD, M_MENU_SELECT, C_GREEN
 
 
 class Menu:
@@ -48,7 +48,7 @@ class Menu:
             for i in range(len(M_COMMAND_KEYS)):
                 self.menu_text(25, M_COMMAND_KEYS[i], C_GOLD, ((WIN_WIDTH / 4) + 150 * i, 270), C_GOLD, offset_x=-1,
                                offset_y=1)
-
+            pygame.display.flip()
             # all check events
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -66,7 +66,10 @@ class Menu:
                             menu_select -= 1
                         else:
                             menu_select = len(M_MENU_SELECT) -1
-            pygame.display.flip()
+                    if event.key == pygame.K_RETURN:
+                        return M_MENU_SELECT[menu_select]
+
+
 
     def menu_text(self, text_size: int, text: str, text_color: tuple, text_center_pos: tuple, shadow_color: tuple,
                   offset_x=0, offset_y=0, ):
