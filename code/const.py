@@ -18,5 +18,6 @@ ENTITY_SPEED = {
     'DemoBg1': 0.55,
     'DemoBg2': 1,
     'DemoBg3': 2,
-    'DemoBg4': 3
+    'DemoBg4': 3,
+    'PlayerMan': 8
 }

@@ -18,6 +18,8 @@ class Demo:
         self.name = name
         self.entity_list: list[Entity] = []
         self.entity_list.extend(EntityFactory.get_entity('DemoBg'))
+        self.entity_list.append(EntityFactory.get_entity('PlayerMan'))
+
 
     def run(self):
         # pygame.mixer_music.load(f'./asset/{self.name}.mp3')
@@ -36,7 +38,7 @@ class Demo:
             pygame.display.flip()
             pass
 
-    def demo_text(self, text_size: int, bold: bool, text: str, text_color: tuple, text_pos: tuple):
+    # def demo_text(self, text_size: int, bold: bool, text: str, text_color: tuple, text_pos: tuple):
         text_font: Font = pygame.font.SysFont(name='Lucida Sans Typeweiter', size=text_size, bold=bold, italic=False, )
         text_surf: Surface = text_font.render(text, True, text_color).convert_alpha()
         text_rect: Rect = text_surf.get_rect(left=text_pos[0], top=text_pos[1])
