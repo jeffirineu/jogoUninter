@@ -11,7 +11,7 @@ from code.const import WIN_WIDTH, C_WHITE, C_HALF_RED, C_HALF_BLACK, M_COMMAND_K
 class Menu:
     def __init__(self, window):
         self.window = window
-        self.surf = pygame.image.load("./asset/MenuIMG.png")
+        self.surf = pygame.image.load("./asset/MenuIMG.png").convert_alpha()
         self.rect = self.surf.get_rect(left=0, top=0)
 
     def run(self, ):
@@ -46,7 +46,7 @@ class Menu:
                                    offset_y=1)
 
             for i in range(len(M_COMMAND_KEYS)):
-                self.menu_text(25, M_COMMAND_KEYS[i], C_GOLD, ((WIN_WIDTH / 4) + 150 * i, 270), C_GOLD, offset_x=-1,
+                self.menu_text(25, M_COMMAND_KEYS[i], C_GOLD, ((WIN_WIDTH / 4) + 150 * i, 270), C_HALF_BLACK, offset_x=-1,
                                offset_y=1)
             pygame.display.flip()
             # all check events

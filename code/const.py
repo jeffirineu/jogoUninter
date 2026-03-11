@@ -15,8 +15,8 @@ WIN_HEIGHT = 324
 # E
 ENTITY_SPEED = {
     'DemoBg0': 0,
-    'DemoBg1': 0.7,
+    'DemoBg1': 0.55,
     'DemoBg2': 1,
-    'DemoBg3': 1.8,
-    'DemoBg4': 2
+    'DemoBg3': 2,
+    'DemoBg4': 3
 }
