@@ -18,6 +18,15 @@ ENTITY_SPEED = {
     'Enemy1': 4,
     'Enemy2': 3,
 }
+ENTITY_LIFE = {
+    'DemoBg0': 999,
+    'DemoBg1': 999,
+    'DemoBg2': 999,
+    'DemoBg3': 999,
+    'PlayerMan': 300,
+    'Enemy1': 30,
+    'Enemy2': 80,
+}
 
 #M
 M_MENU_SELECT = ('INICIAR DEMO', 'SAIR')

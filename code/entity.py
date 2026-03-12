@@ -1,8 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from abc import ABC, abstractproperty, abstractmethod
+from typing import Self
 
 import pygame.image
+
+from code.const import ENTITY_LIFE
 
 
 class Entity(ABC):
@@ -11,6 +14,7 @@ class Entity(ABC):
         self.surf = pygame.image.load('./asset/' + name + '.png').convert_alpha()
         self.rect = self.surf.get_rect(left=position[0], top=position[1])
         self.speed = 0
+        self.life = ENTITY_LIFE[self.name]
 
     @abstractmethod
     def move(self, ):
