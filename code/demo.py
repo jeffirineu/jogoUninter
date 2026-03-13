@@ -10,9 +10,12 @@ from pygame.surface import Surface
 
 from code import entityFactory
 from code.const import EVENT_ENEMY, SPAWN_TIME, C_WHITE, WIN_HEIGHT, C_GREEN
+from code.enemy import Enemy
 from code.entity import Entity
 from code.entityFactory import EntityFactory
 from code.mediatorEntity import MediatorEntity
+from code.player import Player
+from code.shotPlayer import ShotPlayer
 
 
 class Demo:
@@ -24,7 +27,6 @@ class Demo:
         self.entity_list.append(EntityFactory.get_entity('PlayerMan'))
         pygame.time.set_timer(EVENT_ENEMY, SPAWN_TIME)
 
-
     def run(self):
         # pygame.mixer_music.load(f'./asset/{self.name}.mp3')
         # pygame.mixer_music.play(-1)
@@ -34,6 +36,10 @@ class Demo:
             for ent in self.entity_list:
                 self.window.blit(source=ent.surf, dest=ent.rect)
                 ent.move()
+                if isinstance(ent, (Player, Enemy)):
+                    shoot = ent.shoot()
+                    if shoot is not None:
+                        self.entity_list.append(shoot)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -41,7 +47,7 @@ class Demo:
                 if event.type == EVENT_ENEMY:
                     choice = random.choice(('Enemy1', 'Enemy2'))
                     self.entity_list.append(EntityFactory.get_entity(choice))
-            #contagem de entity
+            # contagem de entity
             self.demo_text(20,
                            f'{len(self.entity_list)} - Entitys',
                            False,
@@ -54,7 +60,7 @@ class Demo:
             MediatorEntity.verify_life(entity_list=self.entity_list)
             pass
 
-    def demo_text(self, text_size: int, text: str,bold: bool, text_color: tuple, text_pos: tuple):
+    def demo_text(self, text_size: int, text: str, bold: bool, text_color: tuple, text_pos: tuple):
         text_font: Font = pygame.font.SysFont(name='Lucida Sans Typewriter', size=text_size, bold=bold, italic=False)
 
         text_surf: Surface = text_font.render(text, True, text_color).convert_alpha()

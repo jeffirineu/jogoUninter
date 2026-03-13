@@ -17,6 +17,8 @@ ENTITY_SPEED = {
     'PlayerMan': 5,
     'Enemy1': 4,
     'Enemy2': 3,
+    'Plasma1': 12,
+    'Plasma2': 11
 }
 ENTITY_LIFE = {
     'DemoBg0': 999,
@@ -26,11 +28,15 @@ ENTITY_LIFE = {
     'PlayerMan': 300,
     'Enemy1': 30,
     'Enemy2': 80,
+    'Plasma1': 1,
+    'Plasma2': 1
 }
+
+ENTITY_DELAY_SHOT = 50
 
 #M
 M_MENU_SELECT = ('INICIAR DEMO', 'SAIR')
-M_COMMAND_KEYS = ('ESPAÇO: ATIRAR', 'SETAS: MOVER', 'ENTER: MÍSSEIS')
+M_COMMAND_KEYS = ('ESPAÇO: ATIRAR', 'SETAS: MOVER')
 
 
 

@@ -1,5 +1,8 @@
+from code.const import WIN_WIDTH
 from code.enemy import Enemy
 from code.entity import Entity
+from code.shotEnemy import ShotEnemy
+from code.shotPlayer import ShotPlayer
 
 
 class MediatorEntity:
@@ -7,6 +10,12 @@ class MediatorEntity:
     def __collision_window(ent: Entity):  # Método que só funciona dentro do mediator (__)
         if isinstance(ent, Enemy):
             if ent.rect.right < 0:
+                ent.life = 0
+        if isinstance(ent, ShotPlayer):
+            if ent.rect.left  >= WIN_WIDTH:
+                ent.life = 0
+        if isinstance(ent, ShotEnemy):
+            if ent.rect.left  <= 0:
                 ent.life = 0
 
     @staticmethod
