@@ -17,3 +17,4 @@ class Enemy(Entity):
         if self.shot_delay == 0:
             self.shot_delay = ENTITY_DELAY_SHOT
             return ShotEnemy(name='Plasma2', position=(self.rect.left - 30, self.rect.bottom - 40))
+        return None

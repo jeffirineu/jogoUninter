@@ -1,21 +1,19 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import random
-import sys
 
 import pygame
 from pygame.font import Font
 from pygame.rect import Rect
 from pygame.surface import Surface
 
-from code import entityFactory
-from code.const import EVENT_ENEMY, SPAWN_TIME, C_WHITE, WIN_HEIGHT, C_GREEN
+from code.const import EVENT_ENEMY, SPAWN_TIME, C_CYAN, C_GREEN, C_BG_WHITE, C_HALF_BLACK, WIN_WIDTH
 from code.enemy import Enemy
 from code.entity import Entity
 from code.entityFactory import EntityFactory
 from code.mediatorEntity import MediatorEntity
+
 from code.player import Player
-from code.shotPlayer import ShotPlayer
 
 
 class Demo:
@@ -40,6 +38,21 @@ class Demo:
                     shoot = ent.shoot()
                     if shoot is not None:
                         self.entity_list.append(shoot)
+                if ent.name == 'PlayerMan':
+                    self.demo_text(20,
+                                   f'LIFE: {ent.life}',
+                                   C_GREEN,
+                                   (0, 10),
+                                   C_HALF_BLACK
+                                   )
+                if ent.name == 'PlayerMan':
+                    self.demo_text(20,
+                                   f'ABATES: {ent.score}',
+                                   C_GREEN,
+                                   (0, 30),
+                                   C_HALF_BLACK
+                                   )
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -47,22 +60,25 @@ class Demo:
                 if event.type == EVENT_ENEMY:
                     choice = random.choice(('Enemy1', 'Enemy2'))
                     self.entity_list.append(EntityFactory.get_entity(choice))
+
             # contagem de entity
-            self.demo_text(20,
-                           f'{len(self.entity_list)} - Entitys',
-                           False,
-                           C_GREEN,
-                           (10, WIN_HEIGHT - 50)
-                           )
+            # self.demo_text(20,
+            #                f'{len(self.entity_list)} - Entitys',
+            #                False,
+            #                C_GREEN,
+            #                (10, WIN_HEIGHT - 20)
+            #                )
+
             pygame.display.flip()
 
             MediatorEntity.verify_collision(entity_list=self.entity_list)
             MediatorEntity.verify_life(entity_list=self.entity_list)
             pass
 
-    def demo_text(self, text_size: int, text: str, bold: bool, text_color: tuple, text_pos: tuple):
-        text_font: Font = pygame.font.SysFont(name='Lucida Sans Typewriter', size=text_size, bold=bold, italic=False)
+    def demo_text(self, text_size: int, text: str, text_color: tuple, text_pos: tuple,
+                  bg_color: tuple = None, bold: bool = None):
+        text_font: Font = pygame.font.SysFont(name='Lucida Sans Typewriter', size=text_size, bold=bold)
 
-        text_surf: Surface = text_font.render(text, True, text_color).convert_alpha()
+        text_surf: Surface = text_font.render(text, True, text_color, bg_color).convert_alpha()
         text_rect: Rect = text_surf.get_rect(left=text_pos[0], top=text_pos[1])
         self.window.blit(text_surf, text_rect)

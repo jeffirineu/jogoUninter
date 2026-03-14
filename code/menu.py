@@ -47,8 +47,11 @@ class Menu:
                                    offset_y=1)
 
             for i in range(len(M_COMMAND_KEYS)):
-                self.menu_text(25, M_COMMAND_KEYS[i], C_GOLD, ((WIN_WIDTH / 3) + 200 * i, WIN_HEIGHT - 50), C_HALF_BLACK, offset_x=-1,
-                               offset_y=1)
+                self.menu_text(25, M_COMMAND_KEYS[i], C_GOLD,
+                               ((WIN_WIDTH / 3) + 200 * i, WIN_HEIGHT - 50),
+                               C_HALF_BLACK,
+                               -1,
+                               1)
             pygame.display.flip()
             # all check events
             for event in pygame.event.get():
