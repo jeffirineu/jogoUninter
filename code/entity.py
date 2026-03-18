@@ -7,6 +7,7 @@ import pygame.image
 
 from code.const import ENTITY_LIFE, ENTITY_DAMAGE, ENTITY_SCORE
 
+# Classe abstrata que dita para todas as outras entidades os parâmetros em comum entre elas
 
 class Entity(ABC):
     def __init__(self, name: str, position: tuple):

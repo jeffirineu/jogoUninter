@@ -32,8 +32,7 @@ class MediatorEntity:
             interaction = True
 
         if interaction:  # if interaction: é o mesmo que if interaction == True
-            if (ent1.rect.left >= ent2.rect.left and
-                    ent1.rect.left <= ent2.rect.right and
+            if (ent2.rect.left <= ent1.rect.left <= ent2.rect.right and
                     ent1.rect.bottom >= ent2.rect.top and
                     ent1.rect.top <= ent2.rect.bottom):
                 ent1.life -= ent2.damage
@@ -58,9 +57,16 @@ class MediatorEntity:
                 MediatorEntity.__collision_entity(entity_t1, entity_t2)
 
     @staticmethod
-    def verify_life(entity_list: list[Entity]):
-        for ent in entity_list:
+    def verify_life(entity_list: list[Entity]) -> bool:
+        player_morreu = False
+
+        # O Bug 2 será corrigido na linha do 'for' abaixo:
+        for ent in entity_list[:]:
             if ent.life <= 0:
                 if isinstance(ent, Enemy):
                     MediatorEntity.__give_score(ent, entity_list)
+                if isinstance(ent, Player):
+                    player_morreu = True  # Marca que o player foi de base
                 entity_list.remove(ent)
+
+        return player_morreu  # Devolve essa informação para o main loop

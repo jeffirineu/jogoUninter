@@ -6,7 +6,7 @@ from code.const import WIN_WIDTH, WIN_HEIGHT, M_MENU_SELECT
 from code.demo import Demo
 from code.menu import Menu
 
-
+# Class que interagem com o menu e como o Menu e como a class Demo
 class Game:
     def __init__(self):
         pygame.init()

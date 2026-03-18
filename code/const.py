@@ -1,6 +1,6 @@
-# C
 import pygame
-
+# Constantes usada por todo o programa
+#C
 C_BG_WHITE = (100, 100, 100)
 C_WHITE = (255, 255, 255)
 C_HALF_BLACK = (20, 20, 20)
@@ -18,10 +18,10 @@ ENTITY_SPEED = {
     'DemoBg2': 1,
     'DemoBg3': 2,
     'PlayerMan': 5,
-    'Enemy1': 4,
-    'Enemy2': 3,
+    'Enemy1': 6,
+    'Enemy2': 5,
     'Plasma1': 12,
-    'Plasma2': 11
+    'Plasma2': 15
 }
 ENTITY_LIFE = {
     'DemoBg0': 1,
@@ -35,7 +35,7 @@ ENTITY_LIFE = {
     'Plasma2': 1
 }
 
-ENTITY_DELAY_SHOT = 50
+ENTITY_DELAY_SHOT = 30
 
 ENTITY_DAMAGE = {
     'DemoBg0': 0,
