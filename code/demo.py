@@ -34,8 +34,9 @@ class Demo:
     def run(self):
         pygame.mixer_music.load(f'./asset/{self.name}.mp3')  # Musica de fundo
         pygame.mixer_music.play(-1)
+        pygame.mixer_music.set_volume(0.8)
         clock = pygame.time.Clock()
-        timeout = 20000  # Tem máximo que dura uma partida do demo em milissegundos
+        timeout = 30000  # Tem máximo que dura uma partida do demo em milissegundos
         start_time = pygame.time.get_ticks()
         # Loop principal que roda a demonstração com personagens e inimigos
         while True:
