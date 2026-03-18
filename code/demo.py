@@ -7,7 +7,7 @@ from pygame.font import Font
 from pygame.rect import Rect
 from pygame.surface import Surface
 
-from code.const import EVENT_ENEMY, SPAWN_TIME, C_GREEN, C_HALF_BLACK, WIN_WIDTH, WIN_HEIGHT, C_HALF_RED
+from code.const import EVENT_ENEMY, SPAWN_TIME, C_GREEN, C_HALF_BLACK, WIN_WIDTH, WIN_HEIGHT, C_HALF_RED, C_WHITE
 from code.enemy import Enemy
 from code.entity import Entity
 from code.entityFactory import EntityFactory
@@ -27,19 +27,17 @@ class Demo:
             EntityFactory.get_entity('PlayerMan'))  # adiciona à lista o retorno do caso PlayerMan vindo da fábrica
         pygame.time.set_timer(EVENT_ENEMY, SPAWN_TIME)
         self.life_player = True
-        self.life_player = True
         self.end = False
 
     # Bloco executável
     def run(self):
-        pygame.mixer_music.load(f'./asset/{self.name}.mp3')  # Musica de fundo
-        pygame.mixer_music.play(-1)
-        clock = pygame.time.Clock()
-        timeout = 30000  # Tem máximo que dura uma partida do demo em milissegundos
-        start_time = pygame.time.get_ticks()
-        # Loop principal que roda a demonstração com personagens e inimigos
-        while True:
-            if self.life_player:
+            pygame.mixer_music.load(f'./asset/{self.name}.mp3')  # Musica de fundo
+            pygame.mixer_music.play(-1)
+            clock = pygame.time.Clock()
+            timeout = 1000  # Tem máximo que dura uma partida do demo em milissegundos
+            start_time = pygame.time.get_ticks()
+            # Loop principal que roda a demonstração com personagens e inimigos
+            while True:
                 clock.tick(60)  # Definição de quadros que o jogo roda
                 for list_item in self.entity_list:  # varre a lista em buca das entidades que serão impressas
                     self.window.blit(source=list_item.surf, dest=list_item.rect)
@@ -65,39 +63,50 @@ class Demo:
                                        (10, 30),
                                        C_HALF_BLACK
                                        )
-            if self.life_player and not self.end:
-                tempo_passado = pygame.time.get_ticks() - start_time
-                seconds_remaining = max(0, (timeout - tempo_passado) // 1000)
-                self.demo_text(20, f'TEMPO: {seconds_remaining}s', C_GREEN,
-                               (WIN_WIDTH / 2, 10), center_text=True)
-                if tempo_passado >= timeout:
-                    self.end = True
+                if self.life_player and not self.end:
+                    countdown = pygame.time.get_ticks() - start_time
+                    seconds_remaining = max(0, (timeout - countdown) // 1000)
+                    self.demo_text(20, f'TEMPO: {seconds_remaining}s', C_GREEN,
+                                   (WIN_WIDTH / 2, 10), center_text=True)
+                    if countdown >= timeout:
+                        self.end = True
 
-            else:  # Imprime a tela de GAME OVER
-                self.demo_end('GAME OVER')
+                else:
+                    timeout2 = 5000
+                    self.demo_end('GAME OVER')
+                    start_time2 = pygame.time.get_ticks()
+                    pygame.mixer_music.stop()
+                    pygame.mixer.stop()
+                    countdown2 = pygame.time.get_ticks() - start_time2
+                    seconds_remaining2 = max(0, (timeout2 - countdown2) // 1000)
+                    self.demo_text(30, f'Retornando ao Menu em {seconds_remaining2}s', C_WHITE,
+                                   (WIN_WIDTH / 2, 50), center_text=True)
+                    if countdown2 >= timeout2:
+                        pass
 
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    quit()
-                if event.type == EVENT_ENEMY:
-                    choice = random.choice(('Enemy1', 'Enemy2'))
-                    self.entity_list.append(EntityFactory.get_entity(choice))
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                        quit()
+                    if event.type == EVENT_ENEMY:
+                        choice = random.choice(('Enemy1', 'Enemy2'))
+                        self.entity_list.append(EntityFactory.get_entity(choice))
 
-            pygame.display.flip()
+                pygame.display.flip()
 
-            MediatorEntity.verify_collision(entity_list=self.entity_list)
-            MediatorEntity.verify_collision(entity_list=self.entity_list)
+                MediatorEntity.verify_collision(entity_list=self.entity_list)
+                MediatorEntity.verify_collision(entity_list=self.entity_list)
 
-            # Se a verificação retornar True (player morreu)
-            if MediatorEntity.verify_life(entity_list=self.entity_list):
-                self.life_player = False
-            pass
+                # Se a verificação retornar True (player morreu)
+                if MediatorEntity.verify_life(entity_list=self.entity_list):
+                    self.life_player = False
+
+
+
 
     def demo_end(self, text: str):
         pelicula = pygame.Surface((WIN_WIDTH, WIN_HEIGHT))
         pelicula.fill((0, 0, 0))
-        pelicula.set_alpha(150)
         self.window.blit(pelicula, (0, 0))
         self.demo_text(50,
                        text,

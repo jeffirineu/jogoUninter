@@ -31,7 +31,7 @@ class Menu:
                 offset_y=5  # Sombra no eixo Y
             )
             for i in range(len(M_MENU_SELECT)):
-                if i == menu_select :
+                if i == menu_select:
                     self.menu_text(35,
                                    M_MENU_SELECT[i],
                                    C_GREEN, (WIN_WIDTH / 2, 175 + 40 * i),
@@ -69,11 +69,9 @@ class Menu:
                         if menu_select >= len(M_MENU_SELECT) - 1:
                             menu_select -= 1
                         else:
-                            menu_select = len(M_MENU_SELECT) -1
+                            menu_select = len(M_MENU_SELECT) - 1
                     if event.key == pygame.K_RETURN:
                         return M_MENU_SELECT[menu_select]
-
-
 
     def menu_text(self, text_size: int, text: str, text_color: tuple, text_center_pos: tuple, shadow_color: tuple,
                   offset_x=0, offset_y=0, ):
