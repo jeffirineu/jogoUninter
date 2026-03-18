@@ -14,14 +14,17 @@ from code.entityFactory import EntityFactory
 from code.mediatorEntity import MediatorEntity
 from code.player import Player
 
+
 # Classe responsável por gerir a tela do Game
 class Demo:
     def __init__(self, window, name):
         self.window = window
         self.name = name
         self.entity_list: list[Entity] = []
-        self.entity_list.extend(EntityFactory.get_entity('DemoBg'))
-        self.entity_list.append(EntityFactory.get_entity('PlayerMan'))
+        self.entity_list.extend(
+            EntityFactory.get_entity('DemoBg'))  # adiciona à lista o retorno do caso DeboBg vindo da fábrica
+        self.entity_list.append(
+            EntityFactory.get_entity('PlayerMan'))  # adiciona à lista o retorno do caso PlayerMan vindo da fábrica
         pygame.time.set_timer(EVENT_ENEMY, SPAWN_TIME)
         self.life_player = True
         self.life_player = True
@@ -29,34 +32,35 @@ class Demo:
 
     # Bloco executável
     def run(self):
-        pygame.mixer_music.load(f'./asset/{self.name}.mp3') #Musica de fundo
+        pygame.mixer_music.load(f'./asset/{self.name}.mp3')  # Musica de fundo
         pygame.mixer_music.play(-1)
         clock = pygame.time.Clock()
-        timeout = 20000  # 60 segundos em milissegundos
+        timeout = 30000  # Tem máximo que dura uma partida do demo em milissegundos
         start_time = pygame.time.get_ticks()
-        # Loop principal
+        # Loop principal que roda a demonstração com personagens e inimigos
         while True:
             if self.life_player:
-                clock.tick(60) # Definição de quadros que o jogo roda
-                for ent in self.entity_list:# varre a lista em buca das entidades que serão impressas
-                    self.window.blit(source=ent.surf, dest=ent.rect)
-                    ent.move() # Chama a função de movimento de cada entidade da lista
-                    if isinstance(ent, (Player, Enemy)):
-                        shoot = ent.shoot() # Variável que recebe a função de disparo de cada entidade da lista
+                clock.tick(60)  # Definição de quadros que o jogo roda
+                for list_item in self.entity_list:  # varre a lista em buca das entidades que serão impressas
+                    self.window.blit(source=list_item.surf, dest=list_item.rect)
+                    list_item.move()  # Chama a função de movimento de cada entidade da lista
+                    if isinstance(list_item, (Player, Enemy)):
+                        shoot = list_item.shoot()  # Variável que recebe a função de disparo de cada entidade da lista
                         if shoot is not None:
-                            self.entity_list.append(shoot) # Se a função não nula ele adiciona o disparo na lista de impressão
+                            self.entity_list.append(
+                                shoot)  # Se a função não nula ele adiciona o disparo na lista de impressão
                     # Imprime a vida do jogador
-                    if ent.name == 'PlayerMan':
+                    if list_item.name == 'PlayerMan':
                         self.demo_text(20,
-                                       f'LIFE: {ent.life}',
+                                       f'LIFE: {list_item.life}',
                                        C_GREEN,
                                        (10, 10),
                                        C_HALF_BLACK
                                        )
-                    #imprime a quantidade de inimigos mortos
-                    if ent.name == 'PlayerMan':
+                    # imprime a quantidade de inimigos mortos
+                    if list_item.name == 'PlayerMan':
                         self.demo_text(20,
-                                       f'ABATES: {ent.score}',
+                                       f'ABATES: {list_item.score}',
                                        C_GREEN,
                                        (10, 30),
                                        C_HALF_BLACK
@@ -69,7 +73,7 @@ class Demo:
                 if tempo_passado >= timeout:
                     self.end = True
 
-            else:# Imprime a tela de GAME OVER
+            else:  # Imprime a tela de GAME OVER
                 self.demo_end('GAME OVER')
 
             for event in pygame.event.get():

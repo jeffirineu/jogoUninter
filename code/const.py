@@ -1,5 +1,5 @@
 import pygame
-# Constantes usada por todo o programa
+# Constantes
 #C
 C_BG_WHITE = (100, 100, 100)
 C_WHITE = (255, 255, 255)
