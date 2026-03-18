@@ -8,7 +8,7 @@ from code.shotPlayer import ShotPlayer
 
 class MediatorEntity:
     @staticmethod
-    #essa def é de usso apenas da class
+    # essa def é de usso apenas da class
     def __collision_window(ent: Entity):
         if isinstance(ent, Enemy):
             if ent.rect.right < 0:

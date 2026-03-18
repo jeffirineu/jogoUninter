@@ -1,11 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from abc import ABC, abstractproperty, abstractmethod
-from typing import Self
+from abc import ABC, abstractmethod
 
 import pygame.image
 
 from code.const import ENTITY_LIFE, ENTITY_DAMAGE, VALUE_KILLS
+
 
 # Classe abstrata que dita para todas as outras entidades os parâmetros em comum entre elas
 

@@ -48,7 +48,7 @@ ENTITY_DAMAGE = {
     'Plasma1': 20,
     'Plasma2': 25
 }
-VALUE_KILLS = {
+VALUE_KILLS: dict[str, int] = {
     'DemoBg0': 0,
     'DemoBg1': 0,
     'DemoBg2': 0,

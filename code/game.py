@@ -17,10 +17,10 @@ class Game:
         while True:
             menu = Menu(self.window)
             m_return = menu.run()
-            #Interação com a tela menu e inicialização da tela de demonstração
+            # Interação com a tela menu e inicialização da tela de demonstração
             if m_return == M_MENU_SELECT[0]:
                 demo = Demo(self.window, 'Demo')
-                demo_return = demo.run()
+                demo.run()
             elif m_return == M_MENU_SELECT[1]:
                 pygame.quit()
                 quit()

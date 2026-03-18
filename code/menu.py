@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from msilib.schema import Font
 
 import pygame.image
 from pygame import Surface, Rect

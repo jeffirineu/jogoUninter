@@ -32,85 +32,82 @@ class Demo:
 
     # Bloco executável
     def run(self):
-            pygame.mixer_music.load(f'./asset/{self.name}.mp3')  # Musica de fundo
-            pygame.mixer_music.play(-1)
-            clock = pygame.time.Clock()
-            timeout = 20000  # Tem máximo que dura uma partida do demo em milissegundos
-            start_time = pygame.time.get_ticks()
-            # Loop principal que roda a demonstração com personagens e inimigos
-            while True:
-                clock.tick(60)  # Definição de quadros que o jogo roda
-                for list_item in self.entity_list:  # varre a lista em buca das entidades que serão impressas
-                    self.window.blit(source=list_item.surf, dest=list_item.rect)
-                    list_item.move()  # Chama a função de movimento de cada entidade da lista
-                    if isinstance(list_item, (Player, Enemy)):
-                        shoot = list_item.shoot()  # Variável que recebe a função de disparo de cada entidade da lista
-                        if shoot is not None:
-                            self.entity_list.append(
-                                shoot)  # Se a função não nula ele adiciona o disparo na lista de impressão
-                    # Mostra a vida do personagem
-                    if list_item.name == 'PlayerMan':
-                        self.demo_text(20,
-                                       f'LIFE: {list_item.life}',
-                                       C_GREEN,
-                                       (10, 10),
-                                       C_HALF_BLACK
-                                       )
-                    # Mostra quanto inimigos foram abatidos
-                    if list_item.name == 'PlayerMan':
-                        self.demo_text(20,
-                                       f'KILLS: {list_item.kills}',
-                                       C_GREEN,
-                                       (10, 30),
-                                       C_HALF_BLACK
-                                       )
-                # Mostra o tempo até o fim do demo
-                if self.life_player and not self.end:
-                    countdown = pygame.time.get_ticks() - start_time
-                    seconds_remaining = max(0, (timeout - countdown) // 1000)
-                    self.demo_text(20, f'TEMPO: {seconds_remaining}s', C_GREEN,
-                                   (WIN_WIDTH / 2, 10), center_text=True)
-                    if countdown >= timeout:
-                        self.end = True
+        pygame.mixer_music.load(f'./asset/{self.name}.mp3')  # Musica de fundo
+        pygame.mixer_music.play(-1)
+        clock = pygame.time.Clock()
+        timeout = 20000  # Tem máximo que dura uma partida do demo em milissegundos
+        start_time = pygame.time.get_ticks()
+        # Loop principal que roda a demonstração com personagens e inimigos
+        while True:
+            clock.tick(60)  # Definição de quadros que o jogo roda
+            for list_item in self.entity_list:  # varre a lista em buca das entidades que serão impressas
+                self.window.blit(source=list_item.surf, dest=list_item.rect)
+                list_item.move()  # Chama a função de movimento de cada entidade da lista
+                if isinstance(list_item, (Player, Enemy)):
+                    shoot = list_item.shoot()  # Variável que recebe a função de disparo de cada entidade da lista
+                    if shoot is not None:
+                        self.entity_list.append(
+                            shoot)  # Se a função não nula ele adiciona o disparo na lista de impressão
+                # Mostra a vida do personagem
+                if list_item.name == 'PlayerMan':
+                    self.demo_text(20,
+                                   f'LIFE: {list_item.life}',
+                                   C_GREEN,
+                                   (10, 10),
+                                   C_HALF_BLACK
+                                   )
+                # Mostra quanto inimigos foram abatidos
+                if list_item.name == 'PlayerMan':
+                    self.demo_text(20,
+                                   f'KILLS: {list_item.kills}',
+                                   C_GREEN,
+                                   (10, 30),
+                                   C_HALF_BLACK
+                                   )
+            # Mostra o tempo até o fim do demo
+            if self.life_player and not self.end:
+                countdown = pygame.time.get_ticks() - start_time
+                seconds_remaining = max(0, (timeout - countdown) // 1000)
+                self.demo_text(20, f'TEMPO: {seconds_remaining}s', C_GREEN,
+                               (WIN_WIDTH / 2, 10), center_text=True)
+                if countdown >= timeout:
+                    self.end = True
 
-                else:
-                    if self.start_time2 is None:
-                        self.start_time2 = pygame.time.get_ticks()
-                        pygame.mixer_music.stop()
-                        pygame.mixer.stop()
-                        # Mostra a mensagem de fim
-                    self.demo_end('GAME OVER')
+            else:
+                if self.start_time2 is None:
+                    self.start_time2 = pygame.time.get_ticks()
+                    pygame.mixer_music.stop()
+                    pygame.mixer.stop()
+                    # Mostra a mensagem de fim
+                self.demo_end('GAME OVER')
 
-                    # Calcula quanto tempo passou desde que o jogo "parou"
-                    passed = pygame.time.get_ticks() - self.start_time2
-                    seconds_to_menu = max(0, (5000 - passed) // 1000)
+                # Calcula quanto tempo passou desde que o jogo "parou"
+                passed = pygame.time.get_ticks() - self.start_time2
+                seconds_to_menu = max(0, (5000 - passed) // 1000)
 
-                    self.demo_text(30, f'Retornando ao Menu em {seconds_to_menu}s', C_WHITE,
-                                   (WIN_WIDTH / 2, 50), center_text=True)
+                self.demo_text(30, f'Retornando ao Menu em {seconds_to_menu}s', C_WHITE,
+                               (WIN_WIDTH / 2, 50), center_text=True)
 
-                    # Após 5 segundos, volta ao menu
-                    if passed >= 5000:
-                        return 'MENU'
+                # Após 5 segundos, volta ao menu
+                if passed >= 5000:
+                    return 'MENU'
 
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        pygame.quit()
-                        quit()
-                    if event.type == EVENT_ENEMY:
-                        choice = random.choice(('Enemy1', 'Enemy2'))
-                        self.entity_list.append(EntityFactory.get_entity(choice))
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+                if event.type == EVENT_ENEMY:
+                    choice = random.choice(('Enemy1', 'Enemy2'))
+                    self.entity_list.append(EntityFactory.get_entity(choice))
 
-                pygame.display.flip()
+            pygame.display.flip()
 
-                MediatorEntity.verify_collision(entity_list=self.entity_list)
-                MediatorEntity.verify_collision(entity_list=self.entity_list)
+            MediatorEntity.verify_collision(entity_list=self.entity_list)
+            MediatorEntity.verify_collision(entity_list=self.entity_list)
 
-                # Se a verificação retornar True (player morreu)
-                if MediatorEntity.verify_life(entity_list=self.entity_list):
-                    self.life_player = False
-
-
-
+            # Se a verificação retornar True (player morreu)
+            if MediatorEntity.verify_life(entity_list=self.entity_list):
+                self.life_player = False
 
     def demo_end(self, text: str):
         pelicula = pygame.Surface((WIN_WIDTH, WIN_HEIGHT))
