@@ -5,7 +5,7 @@ from typing import Self
 
 import pygame.image
 
-from code.const import ENTITY_LIFE, ENTITY_DAMAGE, ENTITY_SCORE
+from code.const import ENTITY_LIFE, ENTITY_DAMAGE, VALUE_KILLS
 
 # Classe abstrata que dita para todas as outras entidades os parâmetros em comum entre elas
 
@@ -17,7 +17,7 @@ class Entity(ABC):
         self.speed = 0
         self.life = ENTITY_LIFE[self.name]
         self.damage = ENTITY_DAMAGE[self.name]
-        self.score = ENTITY_SCORE[self.name]
+        self.kills = VALUE_KILLS[self.name]
         self.last_damage = 'None'
 
     @abstractmethod

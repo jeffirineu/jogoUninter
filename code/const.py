@@ -43,12 +43,12 @@ ENTITY_DAMAGE = {
     'DemoBg2': 0,
     'DemoBg3': 0,
     'PlayerMan': 0,
-    'Enemy1': 0,
-    'Enemy2': 0,
+    'Enemy1': 1,
+    'Enemy2': 1,
     'Plasma1': 20,
-    'Plasma2': 50
+    'Plasma2': 25
 }
-ENTITY_SCORE = {
+VALUE_KILLS = {
     'DemoBg0': 0,
     'DemoBg1': 0,
     'DemoBg2': 0,

@@ -8,7 +8,8 @@ from code.shotPlayer import ShotPlayer
 
 class MediatorEntity:
     @staticmethod
-    def __collision_window(ent: Entity):  # Método que só funciona dentro do mediator (__)
+    #essa def é de usso apenas da class
+    def __collision_window(ent: Entity):
         if isinstance(ent, Enemy):
             if ent.rect.right < 0:
                 ent.life = 0
@@ -41,11 +42,11 @@ class MediatorEntity:
                 ent2.last_damage = ent1.name
 
     @staticmethod
-    def __give_score(enemy: Enemy, entity_list: list[Entity]):
+    def __give_kills(enemy: Enemy, entity_list: list[Entity]):
         if enemy.last_damage == 'Plasma1':
             for ent in entity_list:
                 if ent.name == 'PlayerMan':
-                    ent.score += enemy.score
+                    ent.kills += enemy.kills
 
     @staticmethod
     def verify_collision(entity_list: list[Entity]):
@@ -64,7 +65,7 @@ class MediatorEntity:
         for ent in entity_list[:]:
             if ent.life <= 0:
                 if isinstance(ent, Enemy):
-                    MediatorEntity.__give_score(ent, entity_list)
+                    MediatorEntity.__give_kills(ent, entity_list)
                 if isinstance(ent, Player):
                     player_morreu = True  # Marca que o player foi de base
                 entity_list.remove(ent)

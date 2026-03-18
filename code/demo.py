@@ -28,13 +28,14 @@ class Demo:
         pygame.time.set_timer(EVENT_ENEMY, SPAWN_TIME)
         self.life_player = True
         self.end = False
+        self.start_time2 = None
 
     # Bloco executável
     def run(self):
             pygame.mixer_music.load(f'./asset/{self.name}.mp3')  # Musica de fundo
             pygame.mixer_music.play(-1)
             clock = pygame.time.Clock()
-            timeout = 1000  # Tem máximo que dura uma partida do demo em milissegundos
+            timeout = 20000  # Tem máximo que dura uma partida do demo em milissegundos
             start_time = pygame.time.get_ticks()
             # Loop principal que roda a demonstração com personagens e inimigos
             while True:
@@ -47,7 +48,7 @@ class Demo:
                         if shoot is not None:
                             self.entity_list.append(
                                 shoot)  # Se a função não nula ele adiciona o disparo na lista de impressão
-                    # Imprime a vida do jogador
+                    # Mostra a vida do personagem
                     if list_item.name == 'PlayerMan':
                         self.demo_text(20,
                                        f'LIFE: {list_item.life}',
@@ -55,14 +56,15 @@ class Demo:
                                        (10, 10),
                                        C_HALF_BLACK
                                        )
-                    # imprime a quantidade de inimigos mortos
+                    # Mostra quanto inimigos foram abatidos
                     if list_item.name == 'PlayerMan':
                         self.demo_text(20,
-                                       f'ABATES: {list_item.score}',
+                                       f'KILLS: {list_item.kills}',
                                        C_GREEN,
                                        (10, 30),
                                        C_HALF_BLACK
                                        )
+                # Mostra o tempo até o fim do demo
                 if self.life_player and not self.end:
                     countdown = pygame.time.get_ticks() - start_time
                     seconds_remaining = max(0, (timeout - countdown) // 1000)
@@ -72,17 +74,23 @@ class Demo:
                         self.end = True
 
                 else:
-                    timeout2 = 5000
+                    if self.start_time2 is None:
+                        self.start_time2 = pygame.time.get_ticks()
+                        pygame.mixer_music.stop()
+                        pygame.mixer.stop()
+                        # Mostra a mensagem de fim
                     self.demo_end('GAME OVER')
-                    start_time2 = pygame.time.get_ticks()
-                    pygame.mixer_music.stop()
-                    pygame.mixer.stop()
-                    countdown2 = pygame.time.get_ticks() - start_time2
-                    seconds_remaining2 = max(0, (timeout2 - countdown2) // 1000)
-                    self.demo_text(30, f'Retornando ao Menu em {seconds_remaining2}s', C_WHITE,
+
+                    # Calcula quanto tempo passou desde que o jogo "parou"
+                    passed = pygame.time.get_ticks() - self.start_time2
+                    seconds_to_menu = max(0, (5000 - passed) // 1000)
+
+                    self.demo_text(30, f'Retornando ao Menu em {seconds_to_menu}s', C_WHITE,
                                    (WIN_WIDTH / 2, 50), center_text=True)
-                    if countdown2 >= timeout2:
-                        pass
+
+                    # Após 5 segundos, volta ao menu
+                    if passed >= 5000:
+                        return 'MENU'
 
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
